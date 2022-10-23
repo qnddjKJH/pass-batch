@@ -57,7 +57,7 @@ class ExpirePassesJobConfigTest {
                             1L,
                             "A" + 1000000 + i,
                             PassStatus.PROGRESSED,
-                            random.nextLong(11),
+                            random.nextInt(11),
                             now.minusDays(60),
                             now.minusDays(1)
                     )

@@ -14,3 +14,6 @@ spring:
       # Job repository 6 개의 Table 설정 자동 생성 or 직접 생성 등
       initialize-schema: always
 
+kakaotalk:
+  host: https://kapi.kakao.com
+  token: YOUR_ACCESS_TOKEN

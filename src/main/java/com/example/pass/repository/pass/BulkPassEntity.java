@@ -1,12 +1,10 @@
 package com.example.pass.repository.pass;
 
-import com.example.pass.repository.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,36 +19,35 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 @Entity
-@Table(name = "pass")
-public class PassEntity extends BaseEntity {
+@Table(name = "bulk_pass")
+public class BulkPassEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long passSeq;
-
+    private Long bulkPassSeq;
     private Long packageSeq;
-    private String userId;
+    private String userGroupId;
+
     @Enumerated(EnumType.STRING)
-    private PassStatus status;
-    private Integer remainingCount;
+    private BulkPassStatus status;
+    private Integer count;
+
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
-    private LocalDateTime expiredAt;
 
-    public static PassEntity of(Long packageSeq, String userId, PassStatus status, Integer remainingCount, LocalDateTime startedAt, LocalDateTime endedAt) {
-        return PassEntity.builder()
+    public static BulkPassEntity of(Long packageSeq, String userGroupId, BulkPassStatus status, Integer count, LocalDateTime startedAt, LocalDateTime endedAt) {
+        return BulkPassEntity.builder()
                 .packageSeq(packageSeq)
-                .userId(userId)
+                .userGroupId(userGroupId)
                 .status(status)
-                .remainingCount(remainingCount)
+                .count(count)
                 .startedAt(startedAt)
                 .endedAt(endedAt)
                 .build();
     }
 
-    public void expirePass() {
-        this.status = PassStatus.EXPIRED;
-        this.expiredAt = LocalDateTime.now();
+    public void completed() {
+        this.status = BulkPassStatus.COMPLETED;
     }
 }
